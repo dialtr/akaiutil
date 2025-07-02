@@ -1,0 +1,138 @@
+akaiutil_file.h:48:struct akai_sample900_s{
+akaiutil_file.h:90:struct akai_program900_s{
+akaiutil_file.h:105:struct akai_program900kg_s{
+akaiutil_file.h:145:struct akai_drum900des_s{
+akaiutil_file.h:172:struct akai_drum900_s{
+akaiutil_file.h:188:struct akai_ovs900_s{
+akaiutil_file.h:229:struct akai_genfilehdr_s{
+akaiutil_file.h:238:struct akai_sample1000loop_s{
+akaiutil_file.h:248:struct akai_sample1000_s{
+akaiutil_file.h:287:struct akai_sample3000_s{
+akaiutil_file.h:308:struct akai_program1000_s{
+akaiutil_file.h:331:struct akai_program1000kgvelzone_s{
+akaiutil_file.h:352:struct akai_program1000kg_s{
+akaiutil_file.h:377:struct akai_program3000_s{
+akaiutil_file.h:385:struct akai_program3000kg_s{
+akaiutil_file.h:400:struct akai_drum1000des_s{
+akaiutil_file.h:413:struct akai_drum1000_s{
+akaiutil_file.h:442:struct akai_cuelist_s{
+akaiutil_file.h:455:struct akai_cue_s{
+akaiutil_file.h:499:struct akai_cdsetup3000_s{
+akaiutil_file.h:507:struct akai_cdsetup3000_entry_s{
+akaiutil.h:126:struct akai_voldir_entry_s{
+akaiutil.h:148:struct akai_volparam_s{
+akaiutil.h:169:struct akai_voldir900hd_s{
+akaiutil.h:176:struct akai_voldir1000hd_s{
+akaiutil.h:184:struct akai_voldir3000hd_s{
+akaiutil.h:201:struct akai_flvol_label_s{
+akaiutil.h:210:struct akai_fllhead_s{
+akaiutil.h:224:struct akai_flhhead_s{
+akaiutil.h:235:struct akai_voldir3000fl_s{
+akaiutil.h:260:struct akai_hd9rootdir_entry_s{
+akaiutil.h:269:struct akai_hd9head_s{
+akaiutil.h:287:struct akai_rootdir_entry_s{
+akaiutil.h:304:struct akai_parttab_s{
+akaiutil.h:318:struct akai_parthead_s{
+akaiutil.h:342:struct akai_ddtake_s{
+akaiutil.h:380:struct akai_ddparthead_s{
+akaiutil.h:399:	struct akai_parthead_s hd;   /* S1000/S3000 harddisk sampler partition header */
+akaiutil.h:400:	struct akai_ddparthead_s dd; /* S1000/S3000 harddisk DD partition header */
+akaiutil.h:409:struct akai_cdinfohead_s{
+akaiutil.h:421:/* private data structures */
+akaiutil.h:424:struct disk_s{
+akaiutil.h:443:struct part_s{
+akaiutil.h:444:	struct disk_s *diskp; /* pointer to disk */
+akaiutil.h:468:struct vol_s{
+akaiutil.h:469:	struct part_s *partp; /* pointer to partition */
+akaiutil.h:478:	struct akai_voldir_entry_s *file; /* pointer to start of files */
+akaiutil.h:479:	struct akai_volparam_s *param; /* pointer to volume parameters */
+akaiutil.h:489:struct file_s{
+akaiutil.h:490:	struct vol_s *volp; /* pointer to volume */
+akaiutil.h:508:extern struct disk_s disk[DISK_NUM_MAX]; /* disks, Note: one for each disk, system-wide */
+akaiutil.h:515:extern struct part_s part[PART_NUM_MAX]; /* partitions, Note: one for each partition, system-wide */
+akaiutil.h:521:extern struct disk_s *curdiskp; /* current disk pointer into disk[], NULL if system-level */
+akaiutil.h:523:extern struct part_s *curpartp; /* current partition pointer into part[], NULL if disk-level */
+akaiutil.h:525:extern struct vol_s *curvolp; /* current volume pointer into curvol_buf, NULL if disk- or partition-level */
+akaiutil.h:527:extern struct vol_s curvol_buf; /* current volume buffer, Note: only one buffer, might change volume identity!!! */
+akaiutil.h:531:extern struct part_s *savecurpartp;
+akaiutil.h:532:extern struct vol_s *savecurvolp;
+akaiutil.h:533:extern struct vol_s savecurvol_buf;
+akaiutil.h:558:extern int akai_io_blks(struct part_s *pp,u_char *buf,u_int bstart,u_int bsize,int cachealloc,int mode);
+akaiutil.h:563:extern void akai_countfree_part(struct part_s *pp);
+akaiutil.h:565:extern int print_fatchain(struct part_s *pp,u_int blk);
+akaiutil.h:566:extern int akai_free_fatchain(struct part_s *pp,u_int bstart,int writeflag);
+akaiutil.h:567:extern int akai_allocate_fatchain(struct part_s *pp,u_int bsize,u_int *bstartp,u_int bcont0,u_int endcode);
+akaiutil.h:569:extern int akai_scanbad(struct part_s *pp,int markflag);
+akaiutil.h:571:extern int akai_read_file(int outfd,u_char *outbuf,struct file_s *fp,u_int begin,u_int end);
+akaiutil.h:572:extern int akai_write_file(int inpfd,u_char *inpbuf,struct file_s *fp,u_int begin,u_int end);
+akaiutil.h:574:extern int print_ddfatchain(struct part_s *pp,u_int cstart);
+akaiutil.h:575:extern u_int akai_count_ddfatchain(struct part_s *pp,u_int cstart);
+akaiutil.h:576:extern int akai_free_ddfatchain(struct part_s *pp,u_int cstart,int writeflag);
+akaiutil.h:577:extern int akai_allocate_ddfatchain(struct part_s *pp,u_int csize,u_int *cstartp,u_int ccont0);
+akaiutil.h:579:extern int akai_export_ddfatchain(struct part_s *pp,u_int cstart,u_int bstart,u_int bsize,int outfd,u_char *outbuf);
+akaiutil.h:580:extern int akai_import_ddfatchain(struct part_s *pp,u_int cstart,u_int bstart,u_int bsize,int inpfd,u_char *inpbuf);
+akaiutil.h:591:extern void akai_vol_info(struct vol_s *vp,u_int ai,int verbose);
+akaiutil.h:592:extern void akai_list_vol(struct vol_s *vp,u_char *filtertagp);
+akaiutil.h:593:extern int akai_read_voldir(struct vol_s *vp);
+akaiutil.h:594:extern int akai_write_voldir(struct vol_s *vp,u_int fi);
+akaiutil.h:595:extern void akai_copy_structvol(struct vol_s *srcvp,struct vol_s *dstvp);
+akaiutil.h:596:extern int akai_get_vol(struct part_s *pp,struct vol_s *vp,u_int vi);
+akaiutil.h:597:extern int akai_find_vol(struct part_s *pp,struct vol_s *vp,char *name);
+akaiutil.h:598:extern int akai_rename_vol(struct vol_s *vp,char *name,u_int lnum,u_int osver,struct akai_volparam_s *parp);
+akaiutil.h:600:extern int akai_create_vol(struct part_s *pp,struct vol_s *vp,u_int type,u_int index,char *name,u_int lnum,struct akai_volparam_s *parp);
+akaiutil.h:601:extern int akai_wipe_vol(struct vol_s *vp,int delflag);
+akaiutil.h:603:extern void akai_list_volparam(struct akai_volparam_s *parp,int listflag);
+akaiutil.h:604:extern void akai_init_volparam(struct akai_volparam_s *parp,int s3000flag);
+akaiutil.h:609:extern int copy_tags(struct part_s *srcpp,struct part_s *dstpp);
+akaiutil.h:610:extern void akai_list_tags(struct part_s *pp);
+akaiutil.h:611:extern int akai_rename_tag(struct part_s *pp,char *name,u_int ti,int wipeflag);
+akaiutil.h:613:extern void akai_print_cdinfo(struct part_s *pp,int verbose);
+akaiutil.h:614:extern int akai_set_cdinfo(struct part_s *pp,char *cdlabel);
+akaiutil.h:616:extern void akai_part_info(struct part_s *pp,int verbose);
+akaiutil.h:617:extern void akai_list_part(struct part_s *pp,int recflag,u_char *filtertagp);
+akaiutil.h:618:extern struct part_s *akai_find_part(struct disk_s *dp,char *name);
+akaiutil.h:619:extern void print_fat(struct part_s *pp);
+akaiutil.h:621:extern void akai_disk_info(struct disk_s *dp,int verbose);
+akaiutil.h:622:extern void akai_list_disk(struct disk_s *dp,int recflag,u_char *filtertagp);
+akaiutil.h:629:extern int akai_get_file(struct vol_s *vp,struct file_s *fp,u_int fi);
+akaiutil.h:630:extern int akai_find_file(struct vol_s *vp,struct file_s *fp,char *name);
+akaiutil.h:631:extern int akai_rename_file(struct file_s *fp,char *name,struct vol_s *vp,u_int dstindex,u_char *tagp,u_int osver);
+akaiutil.h:633:extern int akai_create_file(struct vol_s *vp,struct file_s *fp,u_int size,u_int index,char *name,u_int osver,u_char *tagp);
+akaiutil.h:634:extern void akai_fvol1000_initfile(struct akai_voldir_entry_s *ep,u_int osver,u_int tag);
+akaiutil.h:635:extern int akai_delete_file(struct file_s *fp);
+akaiutil.h:637:extern int akai_rename_ddtake(struct part_s *pp,u_int ti,char *name);
+akaiutil.h:638:extern int akai_delete_ddtake(struct part_s *pp,u_int ti);
+akaiutil.h:640:extern void akai_fix_partheadmagic(struct part_s *pp);
+akaiutil.h:641:extern int akai_check_partheadmagic(struct part_s *pp);
+akaiutil.h:642:extern void akai_fix_parttabmagic(struct akai_parttab_s *ptp);
+akaiutil.h:643:extern int akai_check_parttabmagic(struct akai_parttab_s *ptp);
+akaiutil.h:645:extern int akai_scan_floppy(struct disk_s *dp);
+akaiutil.h:646:extern int akai_scan_harddisk9(struct disk_s *dp);
+akaiutil.h:647:extern int akai_scan_ddpart(struct disk_s *dp,struct akai_parttab_s *ptp,u_int bstart,u_int pi);
+akaiutil.h:648:extern int akai_scan_disk(struct disk_s *dp,int floppyenable);
+akaiutil.h:650:extern int akai_wipe_part(struct part_s *pp,int wipeflag,struct part_s *plistp,u_int pimax,int cdromflag);
+akaiutil.h:651:extern int akai_wipe_harddisk(struct disk_s *dp,u_int bsize,u_int totb,int s3000flag,int cdromflag);
+akaiutil.h:652:extern int akai_wipe_harddisk9(struct disk_s *dp,u_int totb);
+akaiutil.h:653:extern int akai_wipe_floppy(struct disk_s *dp,int lodensflag,int s3000flag,int s900flag);
+akaiutil.h:663:extern int copy_file(struct file_s *srcfp,struct vol_s *dstvp,struct file_s *dstfp,u_int dstindex,char *dstname,int delflag);
+akaiutil.h:664:extern int copy_vol_allfiles(struct vol_s *srcvp,struct part_s *dstpp,char *dstname,int delflag,int verbose);
+akaiutil.h:665:extern int copy_part_allvols(struct part_s *srcpp,struct part_s *dstpp,int delflag,int verbose);
+akaiutil_io.h:75:struct blk_cache_s{
+akaiutil_io.h:93:extern struct blk_cache_s blk_cache[BLK_CACHE_NUM];
+akaiutil_take.h:38:struct akai_ddtake_s;
+akaiutil_take.h:49:extern int akai_ddtake_info(struct part_s *pp,u_int ti,int verbose);
+akaiutil_take.h:51:extern int akai_import_take(int inpfd,struct part_s *pp,struct akai_ddtake_s *tp,u_int ti,u_int csizes,u_int csizee);
+akaiutil_take.h:53:extern int akai_export_take(int outfd,struct part_s *pp,struct akai_ddtake_s *tp,u_int csizes,u_int csizee,u_int cstarts,u_int cstarte);
+akaiutil_take.h:59:extern int akai_take2wav(struct part_s *pp,u_int ti,int wavfd,u_int *sizep,char **wavnamep,int what);
+akaiutil_take.h:62:extern int akai_wav2take(int wavfd,char *wavname,struct part_s *pp,u_int ti,u_int *bcountp,int what);
+akaiutil_take.h:64:extern int akai_take_setenv(struct part_s *pp,u_int cstarts,u_int samplesize,u_char *envbuf,u_int envsiz);
+akaiutil_tar.h:32:struct tar_head_s{
+akaiutil_tar.h:78:extern int tar_export(int fd,struct disk_s *dp,struct part_s *pp,struct vol_s *vp,struct file_s *fp,u_int ti,u_int flags,int verbose,u_char *filtertagp);
+akaiutil_tar.h:79:extern int tar_export_vol(int fd,struct vol_s *vp,u_int flags,int verbose,u_char *filtertagp);
+akaiutil_tar.h:80:extern int tar_export_part(int fd,struct part_s *pp,u_int flags,int verbose,u_char *filtertagp);
+akaiutil_tar.h:81:extern int tar_export_disk(int fd,struct disk_s *dp,u_int flags,int verbose,u_char *filtertagp);
+akaiutil_wav.h:32:struct wav_riffhead_s{
+akaiutil_wav.h:42:struct wav_chunkhead_s{
+akaiutil_wav.h:49:struct wav_fmthead_s{
+akaiutil_wav.h:63:#define WAV_HEAD_SIZE	(sizeof(struct wav_riffhead_s)+sizeof(struct wav_chunkhead_s)+sizeof(struct wav_fmthead_s)+sizeof(struct wav_chunkhead_s))
+
