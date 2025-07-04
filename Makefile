@@ -27,15 +27,18 @@ ifdef FILE_OFFSET_BITS_64
 CFLAGS	+=	-D_FILE_OFFSET_BITS=64
 endif
 
+AR=ar
+CXX=g++
+CXXFLAGS=-Wall -Werror -g -std=c++17
+RANLIB=ranlib
 
-
-all:	akaiutil
+all:	akaiutil libakai.a libakai_test
 
 install:
 	$(INSTALL_PROGRAM) akaiutil $(PREFIX)/bin/
 
 clean:
-	rm -f akaiutil akaiutil.exe *.o *.obj
+	rm -f akaiutil akaiutil.exe *.o *.obj *.a
 
 back:
 	mkdir -p akaiutil-$(VERSION);\
@@ -71,6 +74,14 @@ akaiutil_io.o:	akaiutil_io.c akaiutil_io.h commoninclude.h
 commonlib.o:	commonlib.c commoninclude.h
 	$(CC) $(CFLAGS) -c commonlib.c
 
+libakai.a: libakai.o
+	$(AR) rcs libakai.a libakai.o
+	$(RANLIB) libakai.a
 
+libakai_test: libakai_test.o libakai.a
+	$(CXX) $(CXXFLAGS) -o libakai_test $^
+
+.cc.o:
+	$(CXX) $(CXXFLAGS) -c $<
 
 # EOF
