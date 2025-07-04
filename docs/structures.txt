@@ -1,0 +1,98 @@
+Akai Disk Structures
+
+This document outlines the key data structures used in the Akai S900, S1000, and
+S3000 series samplers, as reverse-engineered in the akaiutil program.
+
+--------------------------------------------------------------------------------
+Disk Identification
+--------------------------------------------------------------------------------
+
+Identifying an Akai-formatted disk involves checking for specific "magic"
+values within the disk's header structures.
+
+S900 Hard Disk:
+- An S900 hard disk is identified by the `akai_hd9head_s` structure.
+- The `flag1` field within this structure is set to `0xff` if the disk size
+  information is valid.
+
+S1000/S3000 Hard Disk Sampler Partition:
+- A sampler partition is identified by the `akai_parthead_s` structure.
+- This structure contains a `magic` array with `AKAI_PARTHEAD_MAGICNUM` (98)
+  fields. Each entry `i` in this array should contain the value `3333 + i`
+  to be considered valid.
+- The `tagsmagic` field will contain the string "TAGS" if tags are present
+ .
+
+S1000/S3000 Hard Disk Partition Table:
+- The partition table, `akai_parttab_s`, is found within the first sampler
+  partition.
+- It contains a `magic` array with `AKAI_PARTTAB_MAGICNUM` (128) fields
+ . Each entry `i` in this array should contain the value `9999 + i` to be
+  considered valid.
+
+--------------------------------------------------------------------------------
+Partitions
+--------------------------------------------------------------------------------
+
+Akai disks are organized into partitions, which can be of several types:
+
+- **Floppy Partitions:** `PART_TYPE_FLL` (low-density) and `PART_TYPE_FLH`
+  (high-density) for floppy disks.
+- **S900 Hard Disk:** `PART_TYPE_HD9` for S900 hard disks.
+- **S1000/S3000 Sampler Partition:** `PART_TYPE_HD` for sampler partitions on
+  S1000/S3000 hard disks.
+- **S1100/S3000 DD Partition:** `PART_TYPE_DD` for Direct-to-Disk recording
+  partitions.
+
+Partitions contain a header (`akai_parthead_s` for S1000/S3000, `akai_hd9head_s`
+for S900), a File Allocation Table (FAT), and a root directory for volumes.
+
+--------------------------------------------------------------------------------
+Volumes
+--------------------------------------------------------------------------------
+
+Volumes are collections of files within a partition.
+
+- **S900 Hard Disk:** Volumes are defined by `akai_hd9rootdir_entry_s` in the
+  root directory of the S900 hard disk header. Each entry contains the
+  volume name and its starting block on the hard disk.
+
+- **S1000/S3000 Sampler Partition:** Volumes are defined by `akai_rootdir_entry_s`
+  in the root directory of the sampler partition header. Each entry
+  contains the volume name, type (S1000 or S3000), load number, and its starting
+  block within the partition.
+
+Each volume contains its own directory of files, defined by the
+`akai_voldir_entry_s` structure.
+
+--------------------------------------------------------------------------------
+Files
+--------------------------------------------------------------------------------
+
+Files are the individual pieces of data, such as samples, programs, or other
+settings.
+
+- **File Directory Entry:** The `akai_voldir_entry_s` structure describes each
+  file within a volume. It contains:
+  - **name:** The file's name.
+  - **tag:** Up to four tags for categorization (S1000/S3000).
+  - **type:** The file type, such as sample, program, etc..
+  - **size:** The size of the file in bytes.
+  - **start:** The starting block of the file within the partition.
+  - **osver:** The OS version associated with the file.
+
+- **File Types:** The `akaiutil_file.h` header defines various file types,
+  including:
+  - `AKAI_SAMPLE900_FTYPE`, `AKAI_SAMPLE1000_FTYPE`, `AKAI_SAMPLE3000_FTYPE` for
+    samples.
+  - `AKAI_PROGRAM900_FTYPE`, `AKAI_PROGRAM1000_FTYPE`, `AKAI_PROGRAM3000_FTYPE` for
+    programs.
+  - And many others for drum settings, effects, cue lists, etc..
+
+- **File Headers:** Many file types have their own specific headers, such as
+  `akai_sample900_s` for S900 samples or `akai_program1000_s` for S1000 programs
+ . These headers contain detailed information specific to that file type
+ .
+
+This structure, from the disk level down to individual files, allows for the
+organization and management of the sampler's data.

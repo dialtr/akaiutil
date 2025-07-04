@@ -1,0 +1,50 @@
+AKAI Disk Format Overview
+
+This document provides a summary of the Akai disk formats as understood by the
+akaiutil program.
+
+--------------------------------------------------------------------------------
+Floppy Disks
+--------------------------------------------------------------------------------
+
+Akai samplers support both low-density (DD) and high-density (HD) floppy disks.
+
+- Low-density (DD) floppy disks have a size of 800 blocks, with each block
+  being 1KB, for a total of 800KB of storage.
+
+- High-density (HD) floppy disks have a size of 1600 blocks of 1KB each,
+  totaling 1600KB.
+
+--------------------------------------------------------------------------------
+Hard Disks & CD-ROMs
+--------------------------------------------------------------------------------
+
+The hard disk and CD-ROM formats vary between different Akai sampler models.
+
+S900/S950:
+- The maximum size for a hard disk or CD-ROM is 8191 blocks of 8KB each, which
+  is approximately 64MB.
+- Standard hard disk sizes for the S900/S950 are:
+  - 20808KB (2601 blocks) for the Atari SH205
+  - 20000KB (2500 blocks) for the Supra 20M
+  - 30496KB (3812 blocks) for the Supra 30M
+  - 60992KB (7624 blocks) for the Supra 60M
+
+S1000/S3000:
+- The maximum hard disk or CD-ROM size is 65535 blocks of 8KB, which is
+  approximately 512MB.
+- Standard hard disk partition sizes for the S1000/S3000 are:
+  - 30MB (3840 blocks)
+  - 40MB (5120 blocks)
+  - 50MB (6400 blocks)
+  - 60MB (7680 blocks)
+
+--------------------------------------------------------------------------------
+ZIP Disks
+--------------------------------------------------------------------------------
+
+The akaiutil program also recognizes ZIP disk formats.
+
+- A ZIP100 disk is seen as having 12288 blocks of 8KB, totaling 96MB.
+- A ZIP250 disk is seen as having 30595 blocks of 8KB, which is approximately
+  239MB.
