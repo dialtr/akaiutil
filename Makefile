@@ -78,8 +78,15 @@ libafs.a: libafs.o
 	$(AR) rcs libafs.a libafs.o
 	$(RANLIB) libafs.a
 
+libafs.o: libafs.cc libafs.h
+	$(CXX) $(CXXFLAGS) -c libafs.cc
+
 libafs_test: libafs_test.o libafs.a
 	$(CXX) $(CXXFLAGS) -o libafs_test $^
+
+.PHONY:
+format:
+	clang-format -style=Google -i libafs.cc libafs.h
 
 .cc.o:
 	$(CXX) $(CXXFLAGS) -c $<
