@@ -1,3 +1,4 @@
 akaiutil
 *.o
 *.a
+libafs_test
